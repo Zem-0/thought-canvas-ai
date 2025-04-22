@@ -15,29 +15,27 @@ import AuthCallback from "./routes/auth/callback";
 
 const queryClient = new QueryClient();
 
-const App = () => {
-  return (
-    <BrowserRouter>
-      <QueryClientProvider client={queryClient}>
-        <TooltipProvider>
-          <AuthProvider>
-            <Toaster />
-            <Sonner />
-            <Routes>
-              <Route path="/" element={<Index />} />
-              <Route path="/auth" element={<Auth />} />
-              <Route path="/auth/callback" element={<AuthCallback />} />
-              <Route path="/dashboard" element={<Dashboard />} />
-              <Route path="/summaries" element={<Summaries />} />
-              <Route path="/dashboard/new" element={<CreateNote />} />
-              <Route path="/dashboard/edit/:id" element={<EditNote />} />
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-          </AuthProvider>
-        </TooltipProvider>
-      </QueryClientProvider>
-    </BrowserRouter>
-  );
-};
+const App = () => (
+  <BrowserRouter>
+    <QueryClientProvider client={queryClient}>
+      <TooltipProvider>
+        <AuthProvider>
+          <Toaster />
+          <Sonner />
+          <Routes>
+            <Route path="/" element={<Index />} />
+            <Route path="/auth" element={<Auth />} />
+            <Route path="/auth/callback" element={<AuthCallback />} />
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/summaries" element={<Summaries />} />
+            <Route path="/dashboard/new" element={<CreateNote />} />
+            <Route path="/dashboard/edit/:id" element={<EditNote />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </AuthProvider>
+      </TooltipProvider>
+    </QueryClientProvider>
+  </BrowserRouter>
+);
 
 export default App;

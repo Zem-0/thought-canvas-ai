@@ -1,13 +1,17 @@
 import { useEffect } from 'react';
-import { BASE_URL } from '@/lib/constants';
+import { useNavigate } from 'react-router-dom';
+import { supabase } from '@/lib/supabase';
 
 export default function AuthCallback() {
+  const navigate = useNavigate();
+
   useEffect(() => {
-    // Force redirect using window.location if we have an access token
-    if (window.location.hash.includes('access_token')) {
-      window.location.href = `${BASE_URL}/dashboard`;
-    }
-  }, []);
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      if (session) {
+        navigate('/dashboard');
+      }
+    });
+  }, [navigate]);
 
   return (
     <div className="flex items-center justify-center min-h-screen">
