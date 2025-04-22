@@ -1,15 +1,13 @@
 import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { BASE_URL } from '@/lib/constants';
 
 export default function AuthCallback() {
-  const navigate = useNavigate();
-
   useEffect(() => {
-    // Immediately redirect to dashboard if we have an access token
+    // Force redirect using window.location if we have an access token
     if (window.location.hash.includes('access_token')) {
-      navigate('/dashboard', { replace: true });
+      window.location.href = `${BASE_URL}/dashboard`;
     }
-  }, [navigate]);
+  }, []);
 
   return (
     <div className="flex items-center justify-center min-h-screen">
