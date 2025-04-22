@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
@@ -30,6 +29,9 @@ const Navbar = () => {
               <div className="hidden md:ml-10 md:flex md:space-x-4">
                 <Link to="/dashboard" className="px-3 py-2 text-sm font-medium rounded-md hover:bg-secondary">
                   Dashboard
+                </Link>
+                <Link to="/summaries" className="px-3 py-2 text-sm font-medium rounded-md hover:bg-secondary">
+                  Summaries
                 </Link>
               </div>
             )}
@@ -99,6 +101,13 @@ const Navbar = () => {
                   onClick={() => setMobileMenuOpen(false)}
                 >
                   Dashboard
+                </Link>
+                <Link 
+                  to="/dashboard/summaries"
+                  className="block px-3 py-2 rounded-md text-base font-medium hover:bg-secondary"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  Summaries
                 </Link>
                 <Link 
                   to="/dashboard/new"

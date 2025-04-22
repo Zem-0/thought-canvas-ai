@@ -1,4 +1,3 @@
-
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase, Note } from '@/lib/supabase';
 import { useToast } from '@/components/ui/use-toast';
@@ -121,23 +120,32 @@ export function useNotes() {
       throw fetchError || new Error('Note not found');
     }
 
-    // Generate summary using AI
-    const summary = await summarizeText(note.content);
+    try {
+      // Generate summary using AI
+      const summary = await summarizeText(note.content);
 
-    // Update note with summary
-    const { data, error: updateError } = await supabase
-      .from('notes')
-      .update({ summary })
-      .eq('id', id)
-      .eq('user_id', user.id)
-      .select()
-      .single();
+      // Update note with summary and updated_at timestamp
+      const { data, error: updateError } = await supabase
+        .from('notes')
+        .update({ 
+          summary,
+          updated_at: new Date().toISOString()
+        })
+        .eq('id', id)
+        .eq('user_id', user.id)
+        .select()
+        .single();
 
-    if (updateError) {
-      throw updateError;
+      if (updateError) {
+        console.error('Error updating note with summary:', updateError);
+        throw updateError;
+      }
+
+      return data;
+    } catch (error) {
+      console.error('Error in generate summary:', error);
+      throw error;
     }
-
-    return data;
   };
 
   // Use React Query for data fetching
@@ -235,7 +243,18 @@ export function useNotes() {
     createNote: createNoteMutation.mutate,
     updateNote: updateNoteMutation.mutate,
     deleteNote: deleteNoteMutation.mutate,
-    summarizeNote: summarizeNoteMutation.mutate,
+    summarizeNote: (id: string, options?: { onSuccess?: (note: Note) => void }) => {
+      summarizeNoteMutation.mutate(id, {
+        onSuccess: (data) => {
+          queryClient.invalidateQueries({ queryKey: ['notes', user?.id] });
+          queryClient.invalidateQueries({ queryKey: ['note', data.id] });
+          toast({
+            title: 'Summary generated',
+          });
+          options?.onSuccess?.(data);
+        }
+      });
+    },
     isCreating: createNoteMutation.isPending,
     isUpdating: updateNoteMutation.isPending,
     isDeleting: deleteNoteMutation.isPending,

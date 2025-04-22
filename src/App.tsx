@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -11,6 +10,7 @@ import Dashboard from "./pages/Dashboard";
 import CreateNote from "./pages/CreateNote";
 import EditNote from "./pages/EditNote";
 import NotFound from "./pages/NotFound";
+import Summaries from "./pages/Summaries";
 
 const queryClient = new QueryClient();
 
@@ -25,6 +25,7 @@ const App = () => (
             <Route path="/" element={<Index />} />
             <Route path="/auth" element={<Auth />} />
             <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/summaries" element={<Summaries />} />
             <Route path="/dashboard/new" element={<CreateNote />} />
             <Route path="/dashboard/edit/:id" element={<EditNote />} />
             <Route path="*" element={<NotFound />} />
