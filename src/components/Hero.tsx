@@ -1,56 +1,94 @@
-
-import { Button } from '@/components/ui/button';
-import { Link } from 'react-router-dom';
+import { Button } from "@/components/ui/button";
+import { motion } from "framer-motion";
+import { BASE_URL, ROUTES } from "@/lib/constants";
 
 const Hero = () => {
   return (
-    <div className="relative isolate overflow-hidden">
-      <div
+    <div className="relative isolate min-h-screen">
+      {/* Top gradient blur */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 1.5 }}
         className="absolute inset-x-0 top-0 -z-10 transform-gpu overflow-hidden blur-3xl"
         aria-hidden="true"
       >
         <div
-          className="relative left-[calc(50%-11rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 bg-gradient-to-tr from-[#9b87f5] to-[#6E59A5] opacity-30 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem]"
+          className="relative left-[calc(50%-11rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem]"
           style={{
             clipPath:
               'polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)',
           }}
         />
-      </div>
-      
+      </motion.div>
+
+      {/* Main content */}
       <div className="mx-auto max-w-7xl px-6 py-24 sm:py-32 lg:px-8 lg:py-40">
-        <div className="mx-auto max-w-2xl text-center">
-          <h1 className="text-4xl font-bold tracking-tight sm:text-6xl bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 bg-clip-text text-transparent">
+        <motion.div 
+          className="mx-auto max-w-2xl text-center"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+        >
+          <motion.h1 
+            className="text-4xl font-bold tracking-tight sm:text-6xl bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 bg-clip-text text-transparent"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+          >
             AI-powered notes
-          </h1>
-          <p className="mt-6 text-lg leading-8 text-gray-600">
-            Capture, organize, and simplify your thoughts with the power of AI. 
-            ThoughtCanvas helps you focus on what matters by summarizing your notes and making them actionable.
-          </p>
-          <div className="mt-10 flex items-center justify-center gap-x-6">
-            <Button asChild size="lg" className="text-base">
-              <Link to="/auth?mode=signup">Get Started</Link>
+          </motion.h1>
+          <motion.p 
+            className="mt-6 text-lg leading-8 text-gray-600"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+          >
+            Transform your note-taking experience with AI-powered insights. 
+            Organize your thoughts, generate summaries, and discover connections 
+            in your notes like never before.
+          </motion.p>
+          <motion.div 
+            className="mt-10 flex items-center justify-center gap-x-6"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.6 }}
+          >
+            <Button
+              asChild
+              size="lg"
+              className="bg-primary hover:bg-primary/90 transition-all duration-300 transform hover:scale-105"
+            >
+              <a href={`${BASE_URL}${ROUTES.DASHBOARD}`}>Get Started</a>
             </Button>
-            <Button variant="outline" asChild size="lg" className="text-base">
-              <Link to="/auth?mode=signin">Sign In</Link>
+            <Button
+              asChild
+              variant="outline"
+              size="lg"
+              className="transition-all duration-300 transform hover:scale-105"
+            >
+              <a href={`${BASE_URL}${ROUTES.SIGN_IN}`}>Sign In</a>
             </Button>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
       </div>
-      
-      {/* Abstract shape at the bottom */}
-      <div
+
+      {/* Bottom gradient blur */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 1.5 }}
         className="absolute inset-x-0 bottom-0 -z-10 transform-gpu overflow-hidden blur-3xl"
         aria-hidden="true"
       >
         <div
-          className="relative left-[calc(50%+11rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 bg-gradient-to-tr from-[#9b87f5] to-[#6E59A5] opacity-30 sm:left-[calc(50%+15rem)] sm:w-[72.1875rem]"
+          className="relative left-[calc(50%+3rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 sm:left-[calc(50%+36rem)] sm:w-[72.1875rem]"
           style={{
             clipPath:
               'polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)',
           }}
         />
-      </div>
+      </motion.div>
     </div>
   );
 };
