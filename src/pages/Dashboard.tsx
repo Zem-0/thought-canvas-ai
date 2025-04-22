@@ -23,11 +23,13 @@ const Dashboard = () => {
 
   return (
     <Layout>
-      <div className="container py-8">
+      <div className="container py-8 bg-dark-purple min-h-screen text-white">
         {/* Dashboard header */}
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4 bg-black/20 p-6 rounded-lg backdrop-blur-sm">
           <div>
-            <h1 className="text-3xl font-bold">Your Notes</h1>
+            <h1 className="text-3xl font-bold bg-gradient-to-r from-white to-dark-accent bg-clip-text text-transparent">
+              Your Notes
+            </h1>
             <p className="text-muted-foreground mt-1">
               {notes.length} {notes.length === 1 ? 'note' : 'notes'} available
             </p>
@@ -39,13 +41,16 @@ const Dashboard = () => {
               <Input
                 type="search"
                 placeholder="Search notes..."
-                className="pl-8"
+                className="pl-8 bg-white/5 border-white/10 text-white placeholder:text-white/50"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
               />
             </div>
             
-            <Button onClick={() => navigate('/dashboard/new')} className="whitespace-nowrap">
+            <Button 
+              onClick={() => navigate('/dashboard/new')} 
+              className="whitespace-nowrap bg-dark-accent hover:bg-dark-accent/90"
+            >
               <Plus className="h-4 w-4 mr-2" /> New Note
             </Button>
           </div>
@@ -54,7 +59,7 @@ const Dashboard = () => {
         {/* Notes grid */}
         {isLoading ? (
           <div className="flex justify-center items-center h-64">
-            <div className="animate-pulse">Loading notes...</div>
+            <div className="animate-pulse text-white/70">Loading notes...</div>
           </div>
         ) : isError ? (
           <div className="flex justify-center items-center h-64">
@@ -67,17 +72,17 @@ const Dashboard = () => {
             ))}
           </div>
         ) : searchQuery ? (
-          <div className="text-center py-12">
+          <div className="text-center py-12 bg-white/5 rounded-lg backdrop-blur-sm">
             <h2 className="text-xl font-medium">No notes match your search</h2>
             <p className="text-muted-foreground mt-2">Try a different search term</p>
           </div>
         ) : (
-          <div className="text-center py-12">
+          <div className="text-center py-12 bg-white/5 rounded-lg backdrop-blur-sm">
             <h2 className="text-xl font-medium">You don't have any notes yet</h2>
             <p className="text-muted-foreground mt-2 mb-6">
               Create your first note to get started
             </p>
-            <Button onClick={() => navigate('/dashboard/new')}>
+            <Button onClick={() => navigate('/dashboard/new')} className="bg-dark-accent hover:bg-dark-accent/90">
               <Plus className="h-4 w-4 mr-2" /> Create Your First Note
             </Button>
           </div>

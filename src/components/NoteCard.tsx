@@ -58,30 +58,27 @@ const NoteCard = ({ note }: NoteCardProps) => {
 
   return (
     <Card className={cn(
-      "h-full overflow-hidden transition-all duration-200 hover:shadow-md",
-      note.color ? `border-l-4 border-l-[${note.color}]` : "border-l-4 border-l-note-purple"
+      "h-full overflow-hidden transition-all duration-200 hover:shadow-md bg-white/5 backdrop-blur-sm border-white/10",
+      note.color ? `border-l-4 border-l-[${note.color}]` : "border-l-4 border-l-dark-accent"
     )}>
       <CardContent className="p-0">
         <div className="flex flex-col h-full">
-          {/* Note header with title */}
-          <div className="px-6 py-4 border-b">
-            <h3 className="font-medium text-lg truncate">{note.title}</h3>
-            <p className="text-xs text-muted-foreground mt-1">
+          <div className="px-6 py-4 border-b border-white/10">
+            <h3 className="font-medium text-lg truncate text-white">{note.title}</h3>
+            <p className="text-xs text-white/50 mt-1">
               {formatDate(note.updated_at)}
             </p>
           </div>
           
-          {/* Note content preview */}
           <div className="px-6 py-4 flex-grow">
-            <p className="text-sm line-clamp-3">{displayText}</p>
+            <p className="text-sm line-clamp-3 text-white/80">{displayText}</p>
           </div>
           
-          {/* Note actions */}
-          <div className="px-6 py-3 bg-muted/30 flex justify-between">
+          <div className="px-6 py-3 bg-black/20 flex justify-between">
             <Button 
               variant="outline" 
-              size="sm" 
-              className="text-xs flex items-center gap-1"
+              size="sm"
+              className="text-xs flex items-center gap-1 bg-white/5 border-white/10 text-white hover:bg-white/10"
               disabled={isSummarizing}
               onClick={handleSummarize}
             >
@@ -90,7 +87,7 @@ const NoteCard = ({ note }: NoteCardProps) => {
             </Button>
             
             <div className="flex items-center gap-2">
-              <Button asChild variant="ghost" size="sm" className="h-8 w-8 p-0">
+              <Button asChild variant="ghost" size="sm" className="h-8 w-8 p-0 text-white hover:bg-white/10">
                 <Link to={`/dashboard/edit/${note.id}`}>
                   <Edit className="h-4 w-4" />
                 </Link>
@@ -98,11 +95,15 @@ const NoteCard = ({ note }: NoteCardProps) => {
               
               <AlertDialog>
                 <AlertDialogTrigger asChild>
-                  <Button variant="ghost" size="sm" className="h-8 w-8 p-0 text-destructive hover:text-destructive">
+                  <Button 
+                    variant="ghost" 
+                    size="sm" 
+                    className="h-8 w-8 p-0 text-red-400 hover:text-red-300 hover:bg-red-400/10"
+                  >
                     <Trash2 className="h-4 w-4" />
                   </Button>
                 </AlertDialogTrigger>
-                <AlertDialogContent>
+                <AlertDialogContent className="bg-dark-purple border-white/10">
                   <AlertDialogHeader>
                     <AlertDialogTitle>Delete Note</AlertDialogTitle>
                     <AlertDialogDescription>
@@ -110,8 +111,15 @@ const NoteCard = ({ note }: NoteCardProps) => {
                     </AlertDialogDescription>
                   </AlertDialogHeader>
                   <AlertDialogFooter>
-                    <AlertDialogCancel>Cancel</AlertDialogCancel>
-                    <AlertDialogAction onClick={handleDelete}>Delete</AlertDialogAction>
+                    <AlertDialogCancel className="bg-white/5 text-white hover:bg-white/10">
+                      Cancel
+                    </AlertDialogCancel>
+                    <AlertDialogAction 
+                      onClick={handleDelete}
+                      className="bg-red-500 hover:bg-red-600 text-white"
+                    >
+                      Delete
+                    </AlertDialogAction>
                   </AlertDialogFooter>
                 </AlertDialogContent>
               </AlertDialog>
