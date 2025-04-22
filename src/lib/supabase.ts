@@ -1,9 +1,10 @@
 import { createClient } from '@supabase/supabase-js';
 import type { Database } from './database.types';
+import { BASE_URL } from './constants';
 
 // In Vite, we use import.meta.env instead of process.env
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || 'https://ljxbyqjbdwlybibrodii.supabase.co';
-const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxqeGJ5cWpiZHdseWJpYnJvZGlpIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc0NTIzNDMxMiwiZXhwIjoyMDYwODEwMzEyfQ.67CweLZ9vEynE-ThZDOYOnZ6heMIdxysl6tQl01raes';
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
 
 // Check if the required environment variables are set
 if (!supabaseUrl || !supabaseAnonKey) {
@@ -12,7 +13,14 @@ if (!supabaseUrl || !supabaseAnonKey) {
   );
 }
 
-export const supabase = createClient<Database>(supabaseUrl, supabaseAnonKey);
+export const supabase = createClient<Database>(supabaseUrl, supabaseAnonKey, {
+  auth: {
+    autoRefreshToken: true,
+    persistSession: true,
+    detectSessionInUrl: true,
+    storage: window.localStorage
+  }
+});
 
 export type Note = {
   id: string;
