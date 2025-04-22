@@ -1,21 +1,13 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { supabase } from '@/lib/supabase';
 
 export default function AuthCallback() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Get the hash fragment
-    const hashFragment = window.location.hash;
-    
-    if (hashFragment && hashFragment.includes('access_token')) {
-      // The session will be automatically handled by Supabase
-      supabase.auth.getSession().then(({ data: { session } }) => {
-        if (session) {
-          navigate('/dashboard', { replace: true });
-        }
-      });
+    // Immediately redirect to dashboard if we have an access token
+    if (window.location.hash.includes('access_token')) {
+      navigate('/dashboard', { replace: true });
     }
   }, [navigate]);
 
