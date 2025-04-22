@@ -1,10 +1,9 @@
-
 import { createClient } from '@supabase/supabase-js';
 import type { Database } from './database.types';
 
 // In Vite, we use import.meta.env instead of process.env
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
-const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || 'https://ljxbyqjbdwlybibrodii.supabase.co';
+const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxqeGJ5cWpiZHdseWJpYnJvZGlpIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc0NTIzNDMxMiwiZXhwIjoyMDYwODEwMzEyfQ.67CweLZ9vEynE-ThZDOYOnZ6heMIdxysl6tQl01raes';
 
 // Check if the required environment variables are set
 if (!supabaseUrl || !supabaseAnonKey) {
@@ -13,12 +12,7 @@ if (!supabaseUrl || !supabaseAnonKey) {
   );
 }
 
-// Use demo values for development if environment variables are not set
-// This prevents the app from crashing during development
-const finalSupabaseUrl = supabaseUrl || 'https://xyzcompany.supabase.co';  
-const finalSupabaseKey = supabaseAnonKey || 'some-placeholder-anon-key';
-
-export const supabase = createClient<Database>(finalSupabaseUrl, finalSupabaseKey);
+export const supabase = createClient<Database>(supabaseUrl, supabaseAnonKey);
 
 export type Note = {
   id: string;
