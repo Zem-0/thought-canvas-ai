@@ -1,19 +1,22 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '@/lib/supabase';
-import { ROUTES } from '@/lib/constants';
 
 export default function AuthCallback() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Handle the authentication response
-    supabase.auth.onAuthStateChange((event, session) => {
-      if (event === 'SIGNED_IN' && session) {
-        // Redirect to dashboard after successful sign in
-        navigate(ROUTES.DASHBOARD);
-      }
-    });
+    // Get the hash fragment
+    const hashFragment = window.location.hash;
+    
+    if (hashFragment && hashFragment.includes('access_token')) {
+      // The session will be automatically handled by Supabase
+      supabase.auth.getSession().then(({ data: { session } }) => {
+        if (session) {
+          navigate('/dashboard', { replace: true });
+        }
+      });
+    }
   }, [navigate]);
 
   return (
